@@ -32,3 +32,19 @@ The objective of this project is to analyze time complexity, performance behavio
 - Performance testing and benchmarking
 - Handling recursion depth limitations
 - Writing structured and modular Java code
+
+---
+
+## StackOverflowError Fix (QuickSort)
+
+### Problem
+While benchmarking Quick Sort on large datasets (especially sorted or nearly-sorted inputs), the algorithm sometimes triggered a `StackOverflowError`.
+This happened because choosing a poor pivot (e.g., first/last element) repeatedly produces highly unbalanced partitions, causing recursion depth to grow close to `O(n)`.
+
+### Solution
+To reduce the probability of worst-case partitioning, I applied **randomized pivot selection**:
+- Randomly select an index between `low` and `high`
+- Swap the random element with the chosen pivot position
+- Continue partitioning normally
+
+This significantly reduces the chance of repeatedly hitting worst-case behavior and helps keep recursion depth closer to `O(log n)` in practice.
